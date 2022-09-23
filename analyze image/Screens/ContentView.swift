@@ -63,6 +63,26 @@ struct ContentView: View {
                                 }
                             }
                     )
+                    // MARK: - APLICAÇÃO
+                    .gesture(
+                        MagnificationGesture()
+                            .onChanged { value in
+                                withAnimation(.linear(duration: 1)) {
+                                    if imageScale >= 1 && imageScale <= 5 {
+                                        imageScale = value
+                                    } else if imageScale > 5 {
+                                        imageScale = 5
+                                    }
+                                }
+                            }
+                            .onEnded { _ in
+                                if imageScale > 5 {
+                                    imageScale = 5
+                                } else if imageScale <= 1 {
+                                    resetImageState()
+                                }
+                            }
+                    )
             }//: ZSTACK
             .navigationTitle("Pinch & Zoom")
             .navigationBarTitleDisplayMode(.inline)
@@ -96,13 +116,21 @@ struct ContentView: View {
                         }
                         
                         Button(action: {
-                            
+                            resetImageState()
                         }) {
                             ControlImageView(icon: "arrow.up.left.and.down.right.magnifyingglass")
                         }
                         
                         Button(action: {
-                            
+                            withAnimation(.spring()) {
+                                if imageScale < 5 {
+                                    imageScale += 1
+                                    
+                                    if imageScale > 5 {
+                                        imageScale = 5
+                                    }
+                                }
+                            }
                         }) {
                             ControlImageView(icon: "plus.magnifyingglass")
                         }
@@ -114,6 +142,26 @@ struct ContentView: View {
                 }
                   .padding(.bottom, 15)
                 , alignment: .bottom
+            )
+            // MARK: - GAVETA
+            .overlay(
+                HStack(spacing: 12) {
+                    //: IMAGE DA GAVETA
+                    Image(systemName: "chevron.compact.left")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 40)
+                        .padding(8)
+                        .foregroundStyle(.secondary)
+                    
+                    Spacer()
+                }//: HSTACK
+                .padding(EdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8))
+                .background(.ultraThinMaterial)
+                .cornerRadius(8)
+                .frame(width: 260)
+                .padding(.top, UIScreen.main.bounds.height / 12)
+                , alignment: .topTrailing
             )
         }//: Navigation
         .navigationViewStyle(.stack)
