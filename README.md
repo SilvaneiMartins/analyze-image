@@ -20,7 +20,7 @@
 	<br />
 </h1>
 
-🚀 Você ira encontrar uma lista de funcionalidade do projeto que foi implementado. Vamos utilizar banco de dados na nuvem para gerenciar todas as informações geradas pelo sistema.📄
+🚀 Você ira encontrar uma lista de funcionalidade do projeto que foi implementado. Vamos utilizar banco de dados mock criado para testar todas as informações geradas pelo sistema.📄
 
 ### Features
 
